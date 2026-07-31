@@ -1,8 +1,8 @@
 import sharp from 'sharp';
 
 async function processImage() {
-  const inputPath = 'barbershop-app/public/Img/menu superior.png';
-  const outputPath = 'barbershop-app/public/Img/menu superior sem texto.png';
+  const inputPath = 'public/Img/menu superior.png';
+  const outputPath = 'public/Img/menu superior sem texto.png';
 
   // Let's extract a clean wood texture sample from the left area (e.g., x: 120, y: 35, width: 200, height: 140)
   // and composite it over the center area where "BAARBERSHOP" is (e.g. starting around x: 250, y: 30)

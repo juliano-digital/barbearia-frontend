@@ -7,10 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "process:image": "node process_image.js",
+    "inspect:image": "node inspect.js",
+    "generate:menu": "node generate_menu.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.8",
+    "sharp": "^0.35.3",
     "lucide-react": "^1.25.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
