@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import './Carousel.css';
 
 export const Carousel = () => {
+   console.log('CAROUSEL CARREGOU - TESTE 123');
   const images = [
     '/Img/carrossel/1.png',
     '/Img/carrossel/2.png',
@@ -27,47 +29,44 @@ export const Carousel = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-[#5a371c] shadow-2xl relative group">
-      <div className="relative w-full aspect-[6/1]">
+    <div className="carousel-container">
+      <div className="carousel-frame">
         {images.map((img, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex items-center justify-center ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`carousel-slide ${index === currentIndex ? 'active' : ''}`}
           >
-            <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+            <img
+              src={img}
+              alt={`Slide ${index + 1}`}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
           </div>
         ))}
       </div>
 
-      {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-[#1a0f08]/70 hover:bg-[#1a0f08] text-[#d4af37] p-2 rounded-full border border-[#5a371c] opacity-0 group-hover:opacity-100 transition-opacity"
+        className="carousel-nav-btn prev"
         aria-label="Slide anterior"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft />
+        <ChevronRight />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-[#1a0f08]/70 hover:bg-[#1a0f08] text-[#d4af37] p-2 rounded-full border border-[#5a371c] opacity-0 group-hover:opacity-100 transition-opacity"
+        className="carousel-nav-btn next"
         aria-label="Próximo slide"
       >
-        <ChevronRight className="w-6 h-6" />
       </button>
 
-      {/* Pagination Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="carousel-dots">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentIndex
-                ? 'bg-[#d4af37] w-6'
-                : 'bg-[#d4af37]/40 hover:bg-[#d4af37]/70'
-            }`}
+            className={`carousel-dot ${index === currentIndex ? 'active' : ''}`}
             aria-label={`Ir para slide ${index + 1}`}
           />
         ))}
