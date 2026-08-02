@@ -1,6 +1,6 @@
 .carousel-container {
   width: 100%;
-  max-width: 56rem;
+  max-width: 72rem; /* Aumentado de 56rem para 72rem para melhor visualização em monitores maiores */
   margin: 0 auto 24px auto;
   border-radius: 16px;
   overflow: hidden;
@@ -12,7 +12,11 @@
 
 .carousel-frame {
   width: 100%;
-  aspect-ratio: 6 / 1; /* proporção real das imagens: 1500x250 */
+  /* Suas imagens são sempre banners fixos de 1500x250px (proporção 6:1).
+     Por isso o quadro usa essa MESMA proporção em qualquer tamanho de tela
+     — ele só cresce/diminui proporcionalmente, nunca "achata" nem estica.
+     Se um dia trocar as imagens por outra proporção, atualize este valor. */
+  aspect-ratio: 1500 / 250;
   position: relative;
 }
 
@@ -30,10 +34,28 @@
   pointer-events: auto;
 }
 
+.carousel-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--slide-bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(25px) brightness(0.45) saturate(1.2);
+  transform: scale(1.15); /* evita ver a borda desfocada */
+  z-index: 0;
+}
+
 .carousel-slide img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  /* IMPORTANTE: object-fit: contain NUNCA corta a imagem, seja qual for
+     a proporção real dela. Diferente de "cover", que só funciona sem
+     cortar se a proporção da imagem bater EXATAMENTE com a do quadro
+     — e é justamente essa incerteza que estava causando o corte. */
+  object-fit: contain !important;
   object-position: center;
   display: block;
 }
@@ -139,6 +161,44 @@
 
   .carousel-dot.active {
     width: 24px;
+  }
+}
+
+/* Telas grandes (desktops) */
+@media (min-width: 1024px) {
+  .carousel-container {
+    max-width: 96rem; /* Aumentado para telas de desktop maiores */
+  }
+
+  .carousel-nav-btn {
+    padding: 12px;
+  }
+
+  .carousel-nav-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .carousel-nav-btn.prev {
+    left: 20px;
+  }
+
+  .carousel-nav-btn.next {
+    right: 20px;
+  }
+
+  .carousel-dots {
+    bottom: 20px;
+    gap: 10px;
+  }
+
+  .carousel-dot {
+    height: 14px;
+    width: 14px;
+  }
+
+  .carousel-dot.active {
+    width: 28px;
   }
 }
 

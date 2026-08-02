@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import './Carousel.css';
 
 export const Carousel = () => {
-   console.log('CAROUSEL CARREGOU - TESTE 123');
   const images = [
     '/Img/carrossel/1.png',
     '/Img/carrossel/2.png',
@@ -35,6 +34,7 @@ export const Carousel = () => {
           <div
             key={index}
             className={`carousel-slide ${index === currentIndex ? 'active' : ''}`}
+            style={{ '--slide-bg': `url(${img})` }}
           >
             <img
               src={img}
@@ -52,13 +52,13 @@ export const Carousel = () => {
         aria-label="Slide anterior"
       >
         <ChevronLeft />
-        <ChevronRight />
       </button>
       <button
         onClick={handleNext}
         className="carousel-nav-btn next"
         aria-label="Próximo slide"
       >
+        <ChevronRight />
       </button>
 
       <div className="carousel-dots">
