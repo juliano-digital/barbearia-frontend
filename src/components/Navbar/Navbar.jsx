@@ -23,7 +23,7 @@ export const Navbar = () => {
       <div className="absolute top-1.5 right-2 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#f5d78e] via-[#c5a059] to-[#6b4e1e] border border-[#3a220d] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.8)] z-10 hidden md:flex items-center justify-center text-[8px] font-bold text-[#3a220d]">✚</div>
       <div className="absolute bottom-1.5 right-2 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#f5d78e] via-[#c5a059] to-[#6b4e1e] border border-[#3a220d] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.8)] z-10 hidden md:flex items-center justify-center text-[8px] font-bold text-[#3a220d]">✚</div>
 
-      <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-2 md:py-3 px-4 sm:px-6 md:px-8">
         
         {/* Logo Estilo Vintage */}
         <Link to="/" className="flex flex-col items-center group text-center">
