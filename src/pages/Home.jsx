@@ -10,7 +10,25 @@ export const Home = () => {
       <Navbar />
 
       {/* Hero / Início */}
-      <header id="inicio" className="flex flex-col items-center justify-start pt-4 md:justify-center md:min-h-[85vh] text-center p-6 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2d1911] via-[#120a06] to-[#0f0a07] relative overflow-hidden">
+      <style>{`
+        @media (min-width: 768px) {
+          #inicio {
+            min-height: 85vh;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
+      <header
+        id="inicio"
+        className="text-center p-6 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2d1911] via-[#120a06] to-[#0f0a07] relative overflow-hidden"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          paddingTop: '1rem',
+        }}
+      >
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]" />
         
         <Carousel />
