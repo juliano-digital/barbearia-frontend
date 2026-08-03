@@ -28,8 +28,8 @@ export const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/cadastro" element={<SignUp />} />
+        <Route path="/recuperar-senha" element={<ForgotPassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/agendamento" element={<Scheduling />} />
         <Route path="/barber" element={<BarberDashboard />} />
