@@ -1,10 +1,11 @@
 import React from 'react';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Carousel } from '../components/Carousel/Carousel';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Scissors, Sparkles, Calendar, ArrowRight, ShieldCheck, Clock, Award } from 'lucide-react';
 
 export const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[#0f0a07] text-[#f3e5ab]">
       <Navbar />
@@ -29,7 +30,7 @@ export const Home = () => {
           paddingTop: '1rem',
         }}
       >
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
         
         <Carousel />
         

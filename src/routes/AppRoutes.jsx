@@ -5,7 +5,7 @@ import { SignUp } from '../pages/SignUp';
 import { Login } from '../pages/Login';
 import { ForgotPassword } from '../pages/ForgotPassword';
 import { Profile } from '../pages/Profile';
-import { Scheduling } from '../pages/Scheduling';
+import Agendamento from '../pages/Agendamento';
 import { BarberDashboard } from '../pages/BarberDashboard';
 import { AdminDashboard } from '../pages/AdminDashboard';
 import { AdminServices } from '../pages/AdminServices';
@@ -31,7 +31,7 @@ export const AppRoutes = () => {
         <Route path="/cadastro" element={<SignUp />} />
         <Route path="/recuperar-senha" element={<ForgotPassword />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/agendamento" element={<Scheduling />} />
+        <Route path="/agendamento" element={<Agendamento />} />
         <Route path="/barber" element={<BarberDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/services" element={<AdminServices />} />

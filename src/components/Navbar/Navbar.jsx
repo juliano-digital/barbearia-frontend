@@ -12,7 +12,7 @@ export const Navbar = () => {
     { to: '/galeria', label: 'Galeria' },
     { to: '/sobre', label: 'Sobre Nós' },
     { to: '/equipe', label: 'Equipe' },
-    { to: '/contato', label: 'Contato' },
+    { to: '/contato', label: 'Contato' }
   ];
 
   return (
@@ -58,6 +58,7 @@ export const Navbar = () => {
                 border-2 border-[#5a371c] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_2px_8px_rgba(0,0,0,0.7)]
                 hover:from-[#ffe8a3] hover:to-[#b5882e] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200
                 flex items-center gap-1.5 whitespace-nowrap"
+            {/* Removido o botão de Agendamento */}
             >
               <Calendar className="w-3.5 h-3.5 text-[#1a0f08]" strokeWidth={2.5} />
               Agendar Horário
