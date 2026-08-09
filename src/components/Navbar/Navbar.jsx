@@ -53,17 +53,6 @@ export const Navbar = () => {
 
           <div className="flex items-center gap-2 pl-3 border-l border-[#5a371c]/50">
             <Link
-              to="/agendamento"
-              className="px-3 py-1.5 rounded-lg bg-gradient-to-b from-[#f5d78e] via-[#d4af37] to-[#9c752b] text-[#1a0f08] font-black uppercase tracking-wider text-xs
-                border-2 border-[#5a371c] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_2px_8px_rgba(0,0,0,0.7)]
-                hover:from-[#ffe8a3] hover:to-[#b5882e] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200
-                flex items-center gap-1.5 whitespace-nowrap"
-            {/* Removido o botão de Agendamento */}
-            >
-              <Calendar className="w-3.5 h-3.5 text-[#1a0f08]" strokeWidth={2.5} />
-              Agendar Horário
-            </Link>
-            <Link
               to="/login"
               className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
               title="Entrar / Conta"
