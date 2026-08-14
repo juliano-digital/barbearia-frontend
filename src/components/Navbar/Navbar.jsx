@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Menu, X, Scissors } from 'lucide-react';
+import { BottomNavBar } from './BottomNavBar';
+
 
 export const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -85,7 +87,7 @@ export const Navbar = () => {
 
         {/* Botão menu mobile */}
         <button
-          className="lg:hidden text-[#d4af37] p-2 rounded-lg bg-[#1a0f08]/50 border border-[#8b5a2b]/50"
+          className="md:hidden text-[#d4af37] p-2 rounded-lg bg-[#1a0f08]/50 border border-[#8b5a2b]/50"
           onClick={() => setMenuAberto(!menuAberto)}
           aria-label="Abrir menu"
         >
@@ -95,17 +97,19 @@ export const Navbar = () => {
 
       {/* Menu Mobile */}
       {menuAberto && (
-        <div className="lg:hidden flex flex-col items-center gap-4 py-6 bg-gradient-to-b from-[#22130c] to-[#140a06] border-t-2 border-[#5a371c] shadow-2xl animate-fadeIn">
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setMenuAberto(false)}
-              className="text-[#f3e5ab] font-bold uppercase tracking-widest text-sm hover:text-[#ffd700] transition-colors py-1"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="md:hidden flex flex-col items-center gap-4 py-6 bg-gradient-to-b from-[#22130c] to-[#140a06] border-t-2 border-[#5a371c] shadow-2xl animate-fadeIn">
+          {navItems
+            .filter(item => item.label === 'Equipe' || item.label === 'Sobre Nós')
+            .map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setMenuAberto(false)}
+                className="text-[#f3e5ab] font-bold uppercase tracking-widest text-sm hover:text-[#ffd700] transition-colors py-1"
+              >
+                {item.label}
+              </Link>
+            ))}
           <div className="flex flex-col gap-3 w-4/5 max-w-xs mt-2 pt-4 border-t border-[#5a371c]">
             <Link
               to="/agendamento"
@@ -125,6 +129,8 @@ export const Navbar = () => {
           </div>
         </div>
       )}
+      <BottomNavBar />
+
     </nav>
   );
 };
