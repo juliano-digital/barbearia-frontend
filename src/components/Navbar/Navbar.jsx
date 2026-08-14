@@ -57,8 +57,7 @@ export const Navbar = () => {
             <Link
               to="/login"
               className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
-              title="Entrar / Conta"
-            >
+              title="Entrar / Conta">
               Entrar
             </Link>
           </div>
