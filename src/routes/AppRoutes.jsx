@@ -19,6 +19,7 @@ import { Galeria } from '../pages/Galeria';
 import { Sobre } from '../pages/Sobre';
 import { Equipe } from '../pages/Equipe';
 import { Contato } from '../pages/Contato';
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRoutes = () => {
   console.log("AppRoutes rendering");
@@ -26,27 +27,35 @@ export const AppRoutes = () => {
     <BrowserRouter>
       <Toaster position="top-right" />
       <Routes>
+        {/* Rotas Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<SignUp />} />
         <Route path="/recuperar-senha" element={<ForgotPassword />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/agendamento" element={<Agendamento />} />
-        <Route path="/barber" element={<BarberDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/services" element={<AdminServices />} />
-        <Route path="/admin/barbers" element={<AdminBarbers />} />
-        <Route path="/admin/hours" element={<AdminHours />} />
-        <Route path="/admin/holidays" element={<AdminHolidays />} />
-        <Route path="/admin/reports" element={<AdminReports />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/precos" element={<Precos />} />
-        <Route path="/galeria" element={<Galeria />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/equipe" element={<Equipe />} />
-        <Route path="/contato" element={<Contato />} />
+
+        {/* Rotas Protegidas */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/agendamento" element={<Agendamento />} />
+          <Route path="/barber" element={<BarberDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/services" element={<AdminServices />} />
+          <Route path="/admin/barbers" element={<AdminBarbers />} />
+          <Route path="/admin/hours" element={<AdminHours />} />
+          <Route path="/admin/holidays" element={<AdminHolidays />} />
+          <Route path="/admin/reports" element={<AdminReports />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/precos" element={<Precos />} />
+          <Route path="/galeria" element={<Galeria />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/equipe" element={<Equipe />} />
+          <Route path="/contato" element={<Contato />} />
+        </Route>
+
+        {/* Rota Curinga */}
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
 };
+

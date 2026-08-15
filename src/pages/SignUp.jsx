@@ -17,19 +17,29 @@ export const SignUp = () => {
 
     setLoading(true);
 
+    // 1. Cria o usuário no Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
     });
 
     if (authError) {
-      toast.error(authError.message);
+      // Supabase costuma retornar essa mensagem quando o e-mail já existe
+      if (
+        authError.message.toLowerCase().includes('already registered') ||
+        authError.message.toLowerCase().includes('already exists')
+      ) {
+        toast.error('Este e-mail já está cadastrado. Faça login.');
+      } else {
+        toast.error(authError.message);
+      }
       setLoading(false);
       return;
     }
 
     const userId = authData?.user?.id;
 
+    // 2. Insere os dados extras (nome, telefone) na tabela users
     if (userId) {
       const { error: profileError } = await supabase
         .from('users')
@@ -43,7 +53,12 @@ export const SignUp = () => {
         ]);
 
       if (profileError) {
-        toast.error('Erro ao salvar dados do usuário: ' + profileError.message);
+        // Código 23505 = violação de unique constraint (e-mail duplicado)
+        if (profileError.code === '23505') {
+          toast.error('Este e-mail já está cadastrado.');
+        } else {
+          toast.error('Erro ao salvar dados do usuário: ' + profileError.message);
+        }
         setLoading(false);
         return;
       }

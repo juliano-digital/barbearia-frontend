@@ -1,11 +1,42 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, Menu, X, Scissors } from 'lucide-react';
 import { BottomNavBar } from './BottomNavBar';
-
+import { supabase } from '../../services/supabaseClient';
 
 export const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
+  const [session, setSession] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verifica a sessão atual
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoadingAuth(false);
+    });
+
+    // Escuta mudanças de autenticação
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setLoadingAuth(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Erro ao fazer logout:', error.message);
+    } else {
+      navigate('/login');
+      setMenuAberto(false); // Fecha o menu mobile após o logout
+    }
+  };
 
   const navItems = [
     { to: '/', label: 'Início' },
@@ -54,12 +85,21 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2 pl-3 border-l border-[#5a371c]/50">
-            <Link
-              to="/login"
-              className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
-              title="Entrar / Conta">
-              Entrar
-            </Link>
+            {!loadingAuth && session ? (
+              <button
+                onClick={handleLogout}
+                className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
+                title="Sair da conta">
+                Sair
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
+                title="Entrar / Conta">
+                Entrar
+              </Link>
+            )}
           </div>
         </div>
 
@@ -75,13 +115,23 @@ export const Navbar = () => {
             <Calendar className="w-3.5 h-3.5 text-[#1a0f08]" strokeWidth={2.5} />
             Agendar Horário
           </Link>
-          <Link
-            to="/login"
-            className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
-            title="Entrar / Conta"
-          >
-            Entrar
-          </Link>
+          {!loadingAuth && session ? (
+            <button
+              onClick={handleLogout}
+              className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
+              title="Sair da conta"
+            >
+              Sair
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="px-2.5 py-1.5 rounded-lg bg-[#1a0f08]/60 text-[#d4af37] font-bold uppercase tracking-wider text-xs border border-[#d4af37]/40 hover:bg-[#1a0f08] transition-colors whitespace-nowrap"
+              title="Entrar / Conta"
+            >
+              Entrar
+            </Link>
+          )}
         </div>
 
         {/* Botão menu mobile */}
@@ -118,13 +168,22 @@ export const Navbar = () => {
               <Calendar className="w-3.5 h-3.5" />
               Agendar Horário
             </Link>
-            <Link
-              to="/login"
-              onClick={() => setMenuAberto(false)}
-              className="w-full text-center px-5 py-2.5 rounded-lg bg-[#1a0f08] text-[#d4af37] font-bold uppercase tracking-wider text-sm border border-[#d4af37]/50"
-            >
-              Entrar / Conta
-            </Link>
+            {!loadingAuth && session ? (
+              <button
+                onClick={handleLogout}
+                className="w-full text-center px-5 py-2.5 rounded-lg bg-[#1a0f08] text-[#d4af37] font-bold uppercase tracking-wider text-sm border border-[#d4af37]/50"
+              >
+                Sair da Conta
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setMenuAberto(false)}
+                className="w-full text-center px-5 py-2.5 rounded-lg bg-[#1a0f08] text-[#d4af37] font-bold uppercase tracking-wider text-sm border border-[#d4af37]/50"
+              >
+                Entrar / Conta
+              </Link>
+            )}
           </div>
         </div>
       )}
