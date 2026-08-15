@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Calendar, Clock, User, Phone, FileText, Send } from 'lucide-react';
+import { supabase } from '../services/supabaseClient';
+import toast from 'react-hot-toast';
 
 /**
  * Página de agendamento para a barbearia - Estilo Pirata! 🏴‍☠️
@@ -10,6 +12,7 @@ import { Calendar, Clock, User, Phone, FileText, Send } from 'lucide-react';
  */
 const Agendamento = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     nome: '',
     telefone: '',
@@ -23,9 +26,30 @@ const Agendamento = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Agendamento enviado:', form);
+    setLoading(true);
+
+    const { error } = await supabase.rpc('criar_agendamento', {
+      p_nome: form.nome,
+      p_telefone: form.telefone,
+      p_descricao: form.descricao,
+      p_data: form.data,
+      p_horario: form.horario,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      if (error.message.includes('HORARIO_INDISPONIVEL')) {
+        toast.error('Esse horário está muito próximo de outro agendamento. É preciso um intervalo de 30 minutos, capitão.');
+      } else {
+        toast.error('Erro ao criar agendamento: ' + error.message);
+      }
+      return;
+    }
+
+    toast.success('Agendamento realizado com sucesso!');
     navigate('/');
   };
 
@@ -179,10 +203,11 @@ const Agendamento = () => {
               {/* Botão de envio - estilo dourado pirata */}
               <button
                 type="submit"
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-b from-[#f5d78e] via-[#d4af37] to-[#9c752b] text-[#1a0f08] font-black uppercase tracking-wider text-base border-2 border-[#5a371c] shadow-[0_6px_20px_rgba(212,175,55,0.3)] hover:from-[#ffe8a3] hover:to-[#b5882e] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+                disabled={loading}
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-b from-[#f5d78e] via-[#d4af37] to-[#9c752b] text-[#1a0f08] font-black uppercase tracking-wider text-base border-2 border-[#5a371c] shadow-[0_6px_20px_rgba(212,175,55,0.3)] hover:from-[#ffe8a3] hover:to-[#b5882e] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <Send className="w-5 h-5 text-[#1a0f08]" />
-                Agendar
+                {loading ? 'Agendando...' : 'Agendar'}
               </button>
             </form>
           </div>
