@@ -69,6 +69,50 @@ CREATE TABLE IF NOT EXISTS public.holidays (
   descricao TEXT
 );
 
+-- Tabela de conteúdo editável do site (usada pelo painel /admin)
+create table if not exists site_content (
+  id uuid primary key default gen_random_uuid(),
+  page text unique not null,
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table site_content enable row level security;
+
+-- Qualquer visitante pode LER o conteúdo (site público)
+create policy "Public can read site content"
+  on site_content for select
+  using (true);
+
+-- Só usuário logado pode criar/editar conteúdo (painel admin)
+create policy "Authenticated users can insert site content"
+  on site_content for insert
+  to authenticated
+  with check (true);
+
+create policy "Authenticated users can update site content"
+  on site_content for update
+  to authenticated
+  using (true)
+  with check (true);
+
+-- Dados iniciais (não sobrescreve se já existir)
+insert into site_content (page, content) values
+  ('home', '{
+    "hero_badge": "Tradição & Estilo Clássico",
+    "hero_title": "Seu estilo começa aqui.",
+    "hero_subtitle": "Cortes precisos, barbas impecáveis e a autêntica experiência de barbearia clássica."
+  }'::jsonb),
+  ('site', '{
+    "brand": "Barbershop Corte & Estilo",
+    "address": "Rua da Barbearia, 123 - Centro",
+    "phone": "(11) 99999-9999",
+    "instagram": "@corteestilo",
+    "working_hours": "Segunda a Sábado: 09h às 20h",
+    "copyright": "© 2026 Barbershop Corte & Estilo. Todos os direitos reservados."
+  }'::jsonb)
+on conflict (page) do nothing;
+
 -- Habilitação de RLS
 ALTER TABLE public.working_hours ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.holidays ENABLE ROW LEVEL SECURITY;
@@ -77,3 +121,4 @@ ALTER TABLE public.barbers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.appointments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.blocked_times ENABLE ROW LEVEL SECURITY;
+

@@ -1,30 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
 
 export const PrivateRoute = () => {
-  const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState(undefined); // undefined = ainda checando
 
   useEffect(() => {
-    // Verifica a sessão atual
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
     });
 
-    // Escuta mudanças de autenticação
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      listener?.subscription?.unsubscribe();
+    };
   }, []);
 
-  if (loading) {
-    return <div>Carregando...</div>;
+  if (session === undefined) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#161616] text-white text-sm">
+        Carregando...
+      </div>
+    );
   }
 
   return session ? <Outlet /> : <Navigate to="/login" replace />;
