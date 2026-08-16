@@ -18,6 +18,12 @@ import { AdminRoute } from './AdminRoute';
 import { AdminLayout } from '../components/Admin/AdminLayout';
 import { AdminDashboard } from '../pages/admin/AdminDashboard';
 import { AdminHome } from '../pages/admin/AdminHome';
+import { AdminSobre } from '../pages/admin/AdminSobre';
+import { AdminServicos } from '../pages/admin/AdminServicos';
+import { AdminPrecos } from '../pages/admin/AdminPrecos';
+import { AdminEquipe } from '../pages/admin/AdminEquipe';
+import { AdminGaleria } from '../pages/admin/AdminGaleria';
+import { AdminContato } from '../pages/admin/AdminContato';
 
 export const AppRoutes = () => {
   return (
@@ -48,7 +54,12 @@ export const AppRoutes = () => {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="home" element={<AdminHome />} />
-            {/* as próximas seções (sobre, servicos, precos, equipe, galeria, contato) entram aqui */}
+            <Route path="sobre" element={<AdminSobre />} />
+            <Route path="servicos" element={<AdminServicos />} />
+            <Route path="precos" element={<AdminPrecos />} />
+            <Route path="equipe" element={<AdminEquipe />} />
+            <Route path="galeria" element={<AdminGaleria />} />
+            <Route path="contato" element={<AdminContato />} />
           </Route>
         </Route>
 
