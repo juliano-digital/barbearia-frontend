@@ -16,8 +16,8 @@ import { Contato } from '../pages/Contato';
 import { PrivateRoute } from './PrivateRoute';
 import { AdminRoute } from './AdminRoute';
 import { AdminLayout } from '../components/Admin/AdminLayout';
-import { AdminDashboard } from '../pages/Admin/AdminDashboard';
-import { AdminHome } from '../pages/Admin/AdminHome';
+import { AdminDashboard } from '../pages/admin/AdminDashboard';
+import { AdminHome } from '../pages/admin/AdminHome';
 
 export const AppRoutes = () => {
   return (
