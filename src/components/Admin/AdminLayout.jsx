@@ -23,10 +23,10 @@ export const AdminLayout = () => {
 
   return (
     <div className="min-h-screen flex bg-white text-black">
-      <aside className="w-56 flex-shrink-0 bg-black text-white flex flex-col">
-        <div className="px-5 py-5 text-base font-semibold border-b border-white/20 flex items-center gap-2">
+      <aside className="w-16 sm:w-56 flex-shrink-0 bg-black text-white flex flex-col">
+        <div className="px-2 sm:px-5 py-5 text-base font-semibold border-b border-white/20 flex items-center justify-center sm:justify-start gap-2">
           <LayoutDashboard size={18} />
-          Admin
+          <span className="hidden sm:inline">Admin</span>
         </div>
         <nav className="flex-1 py-3 flex flex-col gap-0.5">
           {navItems.map(({ to, label, icon: Icon, end }) => (
@@ -34,23 +34,25 @@ export const AdminLayout = () => {
               key={to}
               to={to}
               end={end}
+              title={label}
               className={({ isActive }) =>
-                `flex items-center gap-2.5 px-5 py-2.5 text-sm transition-colors ${
+                `flex items-center justify-center sm:justify-start gap-2.5 px-2 sm:px-5 py-2.5 text-sm transition-colors ${
                   isActive ? 'bg-white text-black font-medium' : 'text-white hover:bg-white/10'
                 }`
               }
             >
               <Icon size={16} />
-              {label}
+              <span className="hidden sm:inline">{label}</span>
             </NavLink>
           ))}
         </nav>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2.5 px-5 py-4 text-sm text-white border-t border-white/20 hover:bg-white/10 transition-colors"
+          title="Sair"
+          className="flex items-center justify-center sm:justify-start gap-2.5 px-2 sm:px-5 py-4 text-sm text-white border-t border-white/20 hover:bg-white/10 transition-colors"
         >
           <LogOut size={15} />
-          Sair
+          <span className="hidden sm:inline">Sair</span>
         </button>
       </aside>
       <div className="flex-1 flex flex-col min-w-0">
